@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using NkwoTheApp.AppCore.Shared.Interfaces;
+using NkwoTheApp.Domain.Enums;
 using NkwoTheApp.Domain.Exceptions;
+using NkwoTheApp.Domain.Models;
 using NkwoTheApp.Persistence.Repository.Interfaces;
 using NkwoTheApp.Shared.DTOs;
 using System;
@@ -27,10 +29,15 @@ namespace NkwoTheApp.AppCore.Shared.Services
         public IEnumerable<SellerDto> GetAllSellers(bool trackChanges)
         {
             var sellers = _repositoryManager.Seller.GetAllSellers(trackChanges);
-            var sellersDto = sellers.Select(s=>new SellerDto(s.User.Username,
-                s.User.RegistrationStatus, s.User.EmailAddress,
-                s.User.PhoneNumber, s.User.Address.StreetNumber + " " + s.User.Address.Street + " street, "
-                + s.User.Address.City + " " +s.User.Address.Country)).ToList();
+            var sellersDto = sellers.Select(s => new SellerDto
+            {
+                Username = s.User.Username,
+                RegistrationStatus = Enum.GetName(typeof(RegistrationStatus), s.RegistrationStatus),
+                EmailAddress = s.User.EmailAddress,
+                PhoneNumber = s.User.PhoneNumber,
+                FullAddress = s.User.Address.StreetNumber + " " + s.User.Address.Street + " street, "
+                + s.User.Address.City + " " + s.User.Address.Country
+            }).ToList();
 
             return sellersDto;
 
@@ -41,10 +48,15 @@ namespace NkwoTheApp.AppCore.Shared.Services
             var seller = _repositoryManager.Seller.GetSeller(sellerId, trackChanges);
             if (seller is null)
                 throw new SellerNotFoundException(sellerId);
-            var sellerDto = new SellerDto(seller.User.Username,
-                seller.User.RegistrationStatus, seller.User.EmailAddress,
-                seller.User.PhoneNumber, seller.User.Address.StreetNumber + " " + seller.User.Address.Street + " street, "
-                + seller.User.Address.City + " " + seller.User.Address.Country);
+            var sellerDto = new SellerDto
+            {
+                Username = seller.User.Username,
+                RegistrationStatus = Enum.GetName(typeof(RegistrationStatus), seller.RegistrationStatus),
+                EmailAddress = seller.User.EmailAddress,
+                PhoneNumber = seller.User.PhoneNumber,
+                FullAddress = seller.User.Address.StreetNumber + " " + seller.User.Address.Street + " street, "
+                + seller.User.Address.City + " " + seller.User.Address.Country
+            };
 
             return sellerDto;
         }

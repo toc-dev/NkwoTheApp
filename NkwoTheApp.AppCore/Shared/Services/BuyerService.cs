@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using NkwoTheApp.AppCore.Shared.Interfaces;
+using NkwoTheApp.Domain.Enums;
 using NkwoTheApp.Domain.Exceptions;
 using NkwoTheApp.Domain.Models;
 using NkwoTheApp.Persistence.Repository.Interfaces;
@@ -28,10 +29,15 @@ namespace NkwoTheApp.AppCore.Shared.Services
         public IEnumerable<BuyerDto> GetAllBuyers(bool trackChanges)
         {
             var buyers = _repositoryManager.Buyer.GetAllBuyers(trackChanges);
-            var buyersDto = buyers.Select(b => new BuyerDto(b.User.Username,
-                b.User.RegistrationStatus, b.User.EmailAddress,
-                b.User.PhoneNumber, b.User.Address.StreetNumber + " " + b.User.Address.Street + " street, "
-                + b.User.Address.City + ". " + b.User.Address.Country)).ToList();
+            var buyersDto = buyers.Select(b => new BuyerDto
+            {
+                Username = b.User.Username,
+                RegistrationStatus = Enum.GetName(typeof(RegistrationStatus), b.RegistrationStatus),
+                EmailAddress = b.User.EmailAddress,
+                PhoneNumber = b.User.PhoneNumber,
+                FullAddress = b.User.Address.StreetNumber + " " + b.User.Address.Street + ", "
+                + b.User.Address.City + ". " + b.User.Address.Country
+            }).ToList();
             return buyersDto;
         }
 
@@ -40,10 +46,15 @@ namespace NkwoTheApp.AppCore.Shared.Services
             var buyer = _repositoryManager.Buyer.GetBuyer(buyerId, trackChanges);
             if (buyer is null)
                 throw new BuyerNotFoundException(buyerId);
-            var buyerDto = new BuyerDto(buyer.User.Username,
-                buyer.User.RegistrationStatus, buyer.User.EmailAddress,
-                buyer.User.PhoneNumber, buyer.User.Address.StreetNumber + " " + buyer.User.Address.Street + " street, "
-                + buyer.User.Address.City + ". " + buyer.User.Address.Country);
+            var buyerDto = new BuyerDto
+            {
+                Username = buyer.User.Username,
+                RegistrationStatus = Enum.GetName(typeof(RegistrationStatus), buyer.RegistrationStatus),
+                EmailAddress = buyer.User.EmailAddress,
+                PhoneNumber = buyer.User.PhoneNumber,
+                FullAddress = buyer.User.Address.StreetNumber + " " + buyer.User.Address.Street + " street, "
+                + buyer.User.Address.City + ". " + buyer.User.Address.Country
+            };
 
             return buyerDto;
         }

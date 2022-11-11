@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace NkwoTheApp.Shared.DTOs
 {
-    public record BuyerDto(string UserName,
-        RegistrationStatus RegistrationStatus,
-        string EmailAddress, string PhoneNuumber,
-        string FullAddress);
+    public record BuyerDto
+    {
+        public string Username { get; init; }
+        public string RegistrationStatus { get; init; }
+        public string EmailAddress { get; init; }
+        public string PhoneNumber { get; init; }
+        public string FullAddress { get; init; }
+    }   
 
 }

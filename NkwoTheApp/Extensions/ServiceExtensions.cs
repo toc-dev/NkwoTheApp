@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NkwoTheApp.AppCore.Shared.Interfaces;
 using NkwoTheApp.AppCore.Shared.Services;
+using NkwoTheApp.Formatters;
 using NkwoTheApp.Persistence.Context;
 using NkwoTheApp.Persistence.Repository.Interfaces;
 using NkwoTheApp.Persistence.Repository.Services;
@@ -37,5 +38,8 @@ namespace NkwoTheApp.Extensions
             IConfiguration configuration) =>
             services.AddDbContext<NkwoTheAppContext>(opts =>
             opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+
+        public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
+            builder.AddMvcOptions(config => config.OutputFormatters.Add(new CSVOutputFormatter()));
     }
 }
