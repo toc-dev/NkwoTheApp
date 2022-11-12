@@ -10,7 +10,7 @@ namespace NkwoTheApp.Persistence.Repository.Interfaces
     public interface IProductRepository
     {
         IEnumerable<PRODUCT> GetAllProducts(bool trackChanges);
-        PRODUCT GetProduct(string productId, bool trackChanges);
+        PRODUCT GetProduct(Guid productId, bool trackChanges);
         void CreateProduct(PRODUCT product);
         void DeleteProduct(Guid productId);
     }

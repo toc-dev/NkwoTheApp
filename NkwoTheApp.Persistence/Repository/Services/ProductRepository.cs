@@ -1,4 +1,5 @@
-﻿using NkwoTheApp.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NkwoTheApp.Domain.Models;
 using NkwoTheApp.Persistence.Context;
 using NkwoTheApp.Persistence.Repository.Interfaces;
 using System;
@@ -18,7 +19,7 @@ namespace NkwoTheApp.Persistence.Repository.Services
         }
         public void CreateProduct(PRODUCT product)
         {
-            throw new NotImplementedException();
+            Create(product);
         }
 
         public void DeleteProduct(Guid productId)
@@ -28,12 +29,20 @@ namespace NkwoTheApp.Persistence.Repository.Services
 
         public IEnumerable<PRODUCT> GetAllProducts(bool trackChanges)
         {
-            throw new NotImplementedException();
+            return GetAll(trackChanges)
+                .Include(product=>product.ProductDetails)
+                .ThenInclude(productDetails=>productDetails.Seller)
+                .ThenInclude(seller=>seller.User)
+                .OrderBy(p=>p.Category)
+                .ToList();
         }
 
         public PRODUCT GetProduct(string productId, bool trackChanges)
         {
-            throw new NotImplementedException();
+            return GetByCondition(p => p.Id.Equals(productId), trackChanges)
+                .Include(product => product.ProductDetails)
+                .ThenInclude(productDetails => productDetails.Seller)
+                .SingleOrDefault();
         }
     }
 }
