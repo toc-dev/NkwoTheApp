@@ -17,6 +17,13 @@ namespace NkwoTheApp.AppCore
                 .ForCtorParam("FullAddress",
                 opt => opt.MapFrom(x => string.Join(' ', x.User.Address.StreetNumber,
                 x.User.Address.Street, x.User.Address.City, x.User.Address.Country)));
+
+            CreateMap<BuyerDto, BUYER>().ReverseMap();
+
+            CreateMap<BuyerCreationDto, BuyerDto>()
+                .ForCtorParam("FullAddress",
+                opt => opt.MapFrom(x => string.Join(' ', x.StreetNumber,
+                x.Street, x.City, x.Country)));
         }
     }
 }

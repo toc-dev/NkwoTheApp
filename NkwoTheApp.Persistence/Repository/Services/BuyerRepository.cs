@@ -17,7 +17,6 @@ namespace NkwoTheApp.Persistence.Repository.Services
         {
 
         }
-
         public IEnumerable<BUYER> GetAllBuyers(bool trackChanges)
         {
             return GetAll(trackChanges)
@@ -33,6 +32,16 @@ namespace NkwoTheApp.Persistence.Repository.Services
                 .Include(buyer=>buyer.User)
                 .ThenInclude(user=>user.Address)
                 .SingleOrDefault();
+        }
+
+        public void CreateBuyer(BUYER buyer)
+        {
+            Create(buyer);
+        }
+
+        public void DeleteBuyer(Guid buyerId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

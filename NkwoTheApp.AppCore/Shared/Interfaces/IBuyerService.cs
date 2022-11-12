@@ -12,5 +12,6 @@ namespace NkwoTheApp.AppCore.Shared.Interfaces
     {
         IEnumerable<BuyerDto> GetAllBuyers(bool trackChanges);
         BuyerDto GetBuyer(Guid buyerId, bool trackChanges);
+        BuyerDto CreateBuyer(BuyerCreationDto buyer);
     }
 }

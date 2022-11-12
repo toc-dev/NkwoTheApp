@@ -52,11 +52,65 @@ namespace NkwoTheApp.AppCore.Shared.Services
                 RegistrationStatus = Enum.GetName(typeof(RegistrationStatus), buyer.RegistrationStatus),
                 EmailAddress = buyer.User.EmailAddress,
                 PhoneNumber = buyer.User.PhoneNumber,
-                FullAddress = buyer.User.Address.StreetNumber + " " + buyer.User.Address.Street + " street, "
+                FullAddress = buyer.User.Address.StreetNumber + " " + buyer.User.Address.Street + ", "
                 + buyer.User.Address.City + ". " + buyer.User.Address.Country
             };
 
             return buyerDto;
         }
+
+        public BuyerDto CreateBuyer(BuyerCreationDto buyer)
+        {
+            //var buyerEntity = _mapper.Map<BUYER>(buyer);
+            
+            var buyerEntity = new BUYER
+            {
+                RegistrationStatus = RegistrationStatus.Completed,
+                CreatedAt = DateTime.Now,
+                User = new USER
+                {
+                    FirstName = buyer.FirstName,
+                    LastName = buyer.LastName,
+                    OtherName = buyer.OtherName,
+                    Username = buyer.Username,
+                    EmailAddress = buyer.EmailAddress,
+                    PhoneNumber = buyer.PhoneNumber,
+                    DateOfBirth = buyer.DateOfBirth,
+                    Gender = buyer.Gender,
+                    PersonType = PersonType.Buyer,
+                    ReferralCode = buyer.ReferalCode,
+                    ImageURL = buyer.ImageUrl,
+                    CreatedAt = DateTime.Now,
+                    Address = new ADDRESS
+                    {
+                        Country = buyer.Country,
+                        Region = buyer.Region,
+                        City = buyer.City,
+                        Street = buyer.Street,
+                        StreetNumber = buyer.StreetNumber
+                    }
+
+                }
+
+            };
+            
+            _repositoryManager.Buyer.CreateBuyer(buyerEntity);
+            _repositoryManager.Save();
+            var buyerToReturn = new BuyerDto
+            {
+                Id = buyerEntity.User.Id.ToString(),
+                Username = buyerEntity.User.Username,
+                RegistrationStatus = Enum.GetName(typeof(RegistrationStatus), buyerEntity.RegistrationStatus),
+                EmailAddress = buyerEntity.User.EmailAddress,
+                PhoneNumber = buyerEntity.User.PhoneNumber,
+                FullAddress = buyerEntity.User.Address.StreetNumber + " " + buyerEntity.User.Address.Street + ", "
+                + buyerEntity.User.Address.City + ". " + buyerEntity.User.Address.Country
+
+
+            };
+            //_mapper.Map<BuyerDto>(buyerEntity);
+            return buyerToReturn;
+        }
+
     }
 }

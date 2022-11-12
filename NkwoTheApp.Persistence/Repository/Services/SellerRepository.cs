@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace NkwoTheApp.Persistence.Repository.Services
 {
-    public class SellerService : RepositoryBase<SELLER>, ISellerRepository
+    public class SellerRepository : RepositoryBase<SELLER>, ISellerRepository
     {
-        public SellerService(NkwoTheAppContext nkwoTheAppContext)
+        public SellerRepository(NkwoTheAppContext nkwoTheAppContext)
             : base(nkwoTheAppContext)
         {
 

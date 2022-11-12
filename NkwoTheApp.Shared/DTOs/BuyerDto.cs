@@ -9,6 +9,7 @@ namespace NkwoTheApp.Shared.DTOs
 {
     public record BuyerDto
     {
+        public string Id { get; init; }
         public string Username { get; init; }
         public string RegistrationStatus { get; init; }
         public string EmailAddress { get; init; }

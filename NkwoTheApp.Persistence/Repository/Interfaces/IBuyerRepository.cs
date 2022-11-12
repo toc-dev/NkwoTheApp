@@ -11,5 +11,7 @@ namespace NkwoTheApp.Persistence.Repository.Interfaces
     {
         IEnumerable<BUYER> GetAllBuyers(bool trackChanges);
         BUYER GetBuyer(Guid buyerId, bool trackChanges);
+        void CreateBuyer(BUYER buyer);
+        void DeleteBuyer(Guid buyerId);
     }
 }

@@ -22,9 +22,9 @@ namespace NkwoTheApp.Domain.Models
         public string EmailAddress { get; set; }
         [Required(ErrorMessage = "A Phone number is required"), Phone(ErrorMessage = "Invalid Phone Number")]
         public string PhoneNumber { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public PersonType PersonType { get; set; }
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
         [ForeignKey("AddressId")]
         public ADDRESS? Address { get; set; }
         public string? ImageURL { get; set; }
