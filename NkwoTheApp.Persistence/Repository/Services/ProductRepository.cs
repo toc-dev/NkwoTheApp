@@ -30,18 +30,13 @@ namespace NkwoTheApp.Persistence.Repository.Services
         public IEnumerable<PRODUCT> GetAllProducts(bool trackChanges)
         {
             return GetAll(trackChanges)
-                .Include(product=>product.ProductDetails)
-                .ThenInclude(productDetails=>productDetails.Seller)
-                .ThenInclude(seller=>seller.User)
                 .OrderBy(p=>p.Category)
                 .ToList();
         }
 
-        public PRODUCT GetProduct(string productId, bool trackChanges)
+        public PRODUCT GetProduct(Guid productId, bool trackChanges)
         {
             return GetByCondition(p => p.Id.Equals(productId), trackChanges)
-                .Include(product => product.ProductDetails)
-                .ThenInclude(productDetails => productDetails.Seller)
                 .SingleOrDefault();
         }
     }

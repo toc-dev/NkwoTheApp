@@ -61,7 +61,6 @@ namespace NkwoTheApp.AppCore.Shared.Services
 
         public BuyerDto CreateBuyer(BuyerCreationDto buyer)
         {
-            //var buyerEntity = _mapper.Map<BUYER>(buyer);
             
             var buyerEntity = new BUYER
             {

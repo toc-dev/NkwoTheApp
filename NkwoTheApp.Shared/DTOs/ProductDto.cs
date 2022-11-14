@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace NkwoTheApp.Shared.DTOs
 {
-    public record ProductDto( string Id, string Name, string ProductCategory, string ShopName,
-        string SellerName, string SellerPhone, string SellerEmail );
+    public record ProductDto
+    {
+        public Guid Id { get; init; }
+        public string Name { get; init; }
+        public string ProductCategory { get; init; }
+    }
 }

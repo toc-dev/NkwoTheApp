@@ -26,13 +26,13 @@ namespace NkwoTheApp.Persistence.Context
             modelBuilder.ApplyConfiguration(new AddressConfiguration());
             //other configurations when ready
         }
-        public DbSet<USER> User { get; set; }
-        public DbSet<BUYER> Buyer { get; set; }
-        public DbSet<SELLER> Seller { get; set; }
-        public DbSet<PRODUCT> Product { get; set; }
-        public DbSet<CART> Cart { get; set; }
-        public DbSet<PRICE_OFFER> PriceOffer { get; set; }
-        public DbSet<PRODUCT_DETAILS> StoreProduct { get; set; }
-        public DbSet<ADDRESS> Address { get; set; }
+        public DbSet<USER> Users { get; set; }
+        public DbSet<BUYER> Buyers { get; set; }
+        public DbSet<SELLER> Sellers { get; set; }
+        public DbSet<PRODUCT> Products { get; set; }
+        public DbSet<CART> Carts { get; set; }
+        public DbSet<PRICE_OFFER> PriceOffers { get; set; }
+        public DbSet<PRODUCT_DETAIL> ProductsDetails { get; set; }
+        public DbSet<ADDRESS> Addresses { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NkwoTheApp.Domain.Models
 {
-    public class PRODUCT_DETAILS: BASE_ENTITY
+    public class PRODUCT_DETAIL: BASE_ENTITY
     {
         public Guid Id { get; set; }
         public Guid ProductId { get; set; }

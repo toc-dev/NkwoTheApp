@@ -8,8 +8,8 @@ namespace NkwoTheApp.Domain.Enums
 {
     public enum ProductCategory
     {
-        Electronics = 1,
-        Fashion,
-        Other
+        ELECTRONICS = 1,
+        FASHION,
+        OTHER
     }
 }

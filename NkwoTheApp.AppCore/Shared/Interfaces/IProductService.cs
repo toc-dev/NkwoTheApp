@@ -11,6 +11,9 @@ namespace NkwoTheApp.AppCore.Shared.Interfaces
     {
         IEnumerable<ProductDto> GetAllProducts(bool trackChanges);
         ProductDto GetProduct(Guid productId, bool trackChanges);
-        ProductDto CreateProduct(ProductDto product);
+        ProductDto CreateProduct(ProductCreationDto product);
+        IEnumerable<ProductDetailDto> GetAllProductDetails(bool trackChanges);
+        ProductDetailDto GetProductDetail(Guid productDetailId, bool trackChanges);
+        ProductDetailDto CreateProductDetail(ProductDetailCreationDto productDetailCreationDto);
     }
 }

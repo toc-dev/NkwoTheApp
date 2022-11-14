@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using NkwoTheApp.AppCore.Shared.Interfaces;
 using NkwoTheApp.Domain.Enums;
+using NkwoTheApp.Domain.Exceptions;
+using NkwoTheApp.Domain.Models;
 using NkwoTheApp.Persistence.Repository.Interfaces;
 using NkwoTheApp.Shared.DTOs;
 using System;
@@ -24,23 +26,35 @@ namespace NkwoTheApp.AppCore.Shared.Services
             _mapper = mapper;
         }
 
-        public ProductDto CreateProduct(ProductDto product)
+        public ProductDto CreateProduct(ProductCreationDto product)
         {
-            throw new NotImplementedException();
+            var productEntity = new PRODUCT
+            {
+                Name = product.Name,
+                Category = (ProductCategory)Enum.Parse(typeof(ProductCategory), product.ProductCategory.ToUpper()), 
+            };
+            _repositoryManager.Product.CreateProduct(productEntity);
+            _repositoryManager.Save();
+            var productToReturn = new ProductDto
+            {
+                Id = productEntity.Id,
+                Name = productEntity.Name,
+                ProductCategory = Enum.GetName(typeof(ProductCategory), productEntity.Category),
+            };
+
+            return productToReturn;
         }
+
+        
 
         public IEnumerable<ProductDto> GetAllProducts(bool trackChanges)
         {
             var products = _repositoryManager.Product.GetAllProducts(trackChanges);
             var productsDto = products.Select(p => new ProductDto
             {
-                Id = p.Id.ToString(),
+                Id = p.Id,
                 Name = p.Name,
                 ProductCategory = Enum.GetName(typeof(ProductCategory), p.Category),
-                ShopName = p.ProductDetails.ShopName,
-                SellerName = p.ProductDetails.Seller.User.FirstName + p.ProductDetails.Seller.User.FirstName,
-                SellerEmail = p.ProductDetails.Seller.User.EmailAddress,
-                SellerPhone = p.ProductDetails.Seller.User.PhoneNumber
             }).ToList();
 
             return productsDto;
@@ -48,7 +62,73 @@ namespace NkwoTheApp.AppCore.Shared.Services
 
         public ProductDto GetProduct(Guid productId, bool trackChanges)
         {
-            throw new NotImplementedException();
+            var product = _repositoryManager.Product.GetProduct(productId, trackChanges);
+            if (product is null)
+                throw new ProductNotFoundException(productId);
+            var productDto = new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                ProductCategory = Enum.GetName(typeof(ProductCategory), product.Category),
+            };
+
+            return productDto;
+        }
+
+        public ProductDetailDto GetProductDetail(Guid productDetailId, bool trackChanges)
+        {
+            var productDetail = _repositoryManager.ProductDetail.GetProductDetail(productDetailId, trackChanges);
+            if(productDetail is null)
+                throw new ProductDetailNotFoundException(productDetailId);
+            var productDetailDto = new ProductDetailDto()
+            {
+                Id = productDetail.Id,
+                ProductName = productDetail.Product.Name,
+                SellerName = productDetail.Seller.User.FirstName + " " + productDetail.Seller.User.LastName,
+                ShopName = productDetail.ShopName,
+                Quantity = productDetail.Quantity,
+                Price = productDetail.Price,
+
+            };
+            return productDetailDto;
+        }
+        public IEnumerable<ProductDetailDto> GetAllProductDetails(bool trackChanges)
+        {
+            var productDetails = _repositoryManager.ProductDetail.GetAllProductDetails(trackChanges);
+            var productDetailsDto = productDetails.Select(p => new ProductDetailDto()
+            {
+                Id = p.Id,
+                ProductName = p.Product.Name,
+                SellerName = p.Seller.User.FirstName + " " + p.Seller.User.LastName,
+                ShopName = p.ShopName,
+                Quantity = p.Quantity,
+                Price = p.Price,
+
+            }).ToList();
+            return productDetailsDto;
+        }
+        public ProductDetailDto CreateProductDetail(ProductDetailCreationDto productDetailCreationDto)
+        {
+            var productDetailEntity = new PRODUCT_DETAIL
+            {
+                ProductId = productDetailCreationDto.ProductId,
+                SellerId = productDetailCreationDto.SellerId,
+                ShopName = productDetailCreationDto.ShopName,
+                Quantity = productDetailCreationDto.Quantity,
+                Price = productDetailCreationDto.Price,
+            };
+            _repositoryManager.ProductDetail.CreateProductDetail(productDetailEntity);
+            _repositoryManager.Save();
+            var productDetailToReturn = new ProductDetailDto()
+            {
+                Id = productDetailEntity.Id,
+                ProductName = productDetailEntity.Product.Name,
+                SellerName = productDetailEntity.Seller.User.FirstName + " " + productDetailEntity.Seller.User.LastName,
+                ShopName = productDetailEntity.ShopName,
+                Quantity = productDetailEntity.Quantity,
+                Price = productDetailEntity.Price,
+            };
+            return productDetailToReturn;
         }
     }
 }

@@ -13,15 +13,18 @@ namespace NkwoTheApp.AppCore.Shared.Services
     {
         private readonly Lazy<IBuyerService> _buyerService;
         private readonly Lazy<ISellerService> _sellerService;
+        private readonly Lazy<IProductService> _productService;
 
         public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper)
         {
             _buyerService = new Lazy<IBuyerService>(() => new BuyerService(repositoryManager, logger, mapper));
             _sellerService = new Lazy<ISellerService>(() => new SellerService(repositoryManager, logger, mapper));
+            _productService = new Lazy<IProductService>(() => new ProductService(repositoryManager, logger, mapper));
         }
 
         public IBuyerService BuyerService => _buyerService.Value;
 
         public ISellerService SellerService => _sellerService.Value;
+        public IProductService ProductService => _productService.Value;
     }
 }

@@ -31,7 +31,7 @@ namespace NkwoTheApp.Persistence.Configuration
                     Country = "Ukraine",
                     Region = "Donbas",
                     City = "Kyiv",
-                    Street = "Spazosevic",
+                    Street = "Spazosevic street",
                     StreetNumber = "1213"
                 }
             );

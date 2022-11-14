@@ -10,5 +10,6 @@ namespace NkwoTheApp.AppCore.Shared.Interfaces
     {
         IBuyerService BuyerService { get; }
         ISellerService SellerService { get; }
+        IProductService ProductService { get; }
     }
 }
