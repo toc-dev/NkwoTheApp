@@ -5,6 +5,8 @@ using NkwoTheApp.Formatters;
 using NkwoTheApp.Persistence.Context;
 using NkwoTheApp.Persistence.Repository.Interfaces;
 using NkwoTheApp.Persistence.Repository.Services;
+using NkwoTheApp.Shared.ThirdPartyServices.Interfaces;
+using NkwoTheApp.Shared.ThirdPartyServices.Services;
 
 namespace NkwoTheApp.Extensions
 {
@@ -38,6 +40,9 @@ namespace NkwoTheApp.Extensions
             IConfiguration configuration) =>
             services.AddDbContext<NkwoTheAppContext>(opts =>
             opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+
+        public static void ConfigureReferenceGenerator(this IServiceCollection services)=>
+            services.AddTransient<IReferenceGenerator, ReferenceGenerator>();
 
         public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
             builder.AddMvcOptions(config => config.OutputFormatters.Add(new CSVOutputFormatter()));

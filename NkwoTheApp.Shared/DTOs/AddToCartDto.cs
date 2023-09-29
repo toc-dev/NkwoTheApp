@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace NkwoTheApp.Shared.DTOs
 {
-    public record AddToCartDto(string ProductName, string SellerName, string ShopName, int Quantity);
+    public record AddToCartDto(Guid SessionId, Guid ProductDetailId, Guid BuyerId, string ProductName, string SellerName, string ShopName, int Quantity);
 }

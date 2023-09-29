@@ -13,6 +13,7 @@ namespace NkwoTheApp.Persistence.Repository.Interfaces
         public ISellerRepository Seller { get; }
         public IProductRepository Product { get; }
         public IProductDetailRepository ProductDetail { get; }
+        public ICartRepository Cart { get; }
         void Save();
     }
 }

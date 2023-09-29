@@ -64,7 +64,7 @@ namespace NkwoTheApp.AppCore.Shared.Services
         {
             var product = _repositoryManager.Product.GetProduct(productId, trackChanges);
             if (product is null)
-                throw new ProductNotFoundException(productId);
+                throw new ItemNotFoundException(productId, "product");
             var productDto = new ProductDto
             {
                 Id = product.Id,
@@ -79,7 +79,7 @@ namespace NkwoTheApp.AppCore.Shared.Services
         {
             var productDetail = _repositoryManager.ProductDetail.GetProductDetail(productDetailId, trackChanges);
             if(productDetail is null)
-                throw new ProductDetailNotFoundException(productDetailId);
+                throw new ItemNotFoundException(productDetailId, "productDetail");
             var productDetailDto = new ProductDetailDto()
             {
                 Id = productDetail.Id,
